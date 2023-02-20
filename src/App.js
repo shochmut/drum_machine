@@ -1,7 +1,9 @@
 import React from "react";
 import useState from 'react';
-import "./style.css";
+import "./style.scss";
 import useSound from 'use-sound';
+import Button from 'react-bootstrap/Button';
+
 
 
 export default function App() {
@@ -9,7 +11,7 @@ export default function App() {
     <div id='drum-machine'>
       <div id='display'>
       </div>
-      <DrumPad />
+      <DrumPad/>
     </div>
   );
 }
@@ -31,9 +33,14 @@ function DrumPad() {
   //const [drum, setDrum] = useState('');
 
   return (
-    <div>
+    <div className='drum-pads'>
         {drums.map(function (item) {
-          return <button>{item.id}</button>;
+          const [play] = useSound(item.sound)
+          return (
+            <div>
+              <Button className='drum-pad' variant='primary' onClick={play}>{item.id}</Button>{' '}
+            </ div>
+          )
         })}
     </div>
   );
