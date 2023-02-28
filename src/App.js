@@ -24,6 +24,7 @@ const [drum, setDrum] = React.useState('');
 //define callback handler
 const handleDisplay = (event) => {
   setDrum(event.target.value);
+  play(drums.find(x => x.id === event.target.value).sound);
 };
 
   return (
@@ -36,8 +37,8 @@ const handleDisplay = (event) => {
 }
 
 
-
-function DrumPad(props) {
+//note the props destructuring
+function DrumPad({ onDrumPlay }) {
 
   return (
     <div className='drum-pads'>
@@ -45,7 +46,7 @@ function DrumPad(props) {
           const [play] = useSound(item.sound)
           return (
             <div>
-              <Button className='drum-pad' variant='primary' value={item.id} onClick={props.onDrumPlay}>{item.id}</Button>{' '}
+              <Button className='drum-pad' variant='primary' value={item.id} onClick={onDrumPlay}>{item.id}</Button>{' '}
             </ div>
           )
         })}
@@ -53,12 +54,13 @@ function DrumPad(props) {
   );
 }
 
-function Display(props) {
+//note the props destructuring
+function Display({ displayDrum }) {
   
   return (
     <div>
       <p>
-        {props.displayDrum}
+        {displayDrum}
       </p>
     </div>
 
