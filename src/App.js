@@ -4,17 +4,6 @@ import "./style.scss";
 import useSound from 'use-sound';
 import Button from 'react-bootstrap/Button';
 
-
-
-export default function App() {
-  return (
-    <div id='drum-machine'>
-      <Display id='display'/>
-      <DrumPad/>
-    </div>
-  );
-}
-
 // Define drumset resource. Note this is defined outside of the component so that it does not run every time the component is rendered since this constant will never change in this use.
 const drums = [
   {id: 'heater1', sound: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3' },
@@ -28,8 +17,27 @@ const drums = [
   {id: 'closed-hh', sound: 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3'},
 ];
 
-function DrumPad() {
-  //const [drum, setDrum] = useState('');
+export default function App() {
+//set state 
+const [drum, setDrum] = React.useState('');
+
+//define callback handler
+const handleDisplay = (event) => {
+  setDrum(event.target.value);
+};
+
+  return (
+    <div id='drum-machine'>
+      <Display id='display' displayDrum={drum}/>
+      {/* pass the callback handler to the drumpad component as prop */}
+      <DrumPad onDrumPlay={handleDisplay}/>
+    </div>
+  );
+}
+
+
+
+function DrumPad(props) {
 
   return (
     <div className='drum-pads'>
@@ -37,7 +45,7 @@ function DrumPad() {
           const [play] = useSound(item.sound)
           return (
             <div>
-              <Button className='drum-pad' variant='primary' onClick={play}>{item.id}</Button>{' '}
+              <Button className='drum-pad' variant='primary' value={item.id} onClick={props.onDrumPlay}>{item.id}</Button>{' '}
             </ div>
           )
         })}
@@ -45,12 +53,12 @@ function DrumPad() {
   );
 }
 
-function Display() {
+function Display(props) {
   
   return (
     <div>
       <p>
-        Test
+        {props.displayDrum}
       </p>
     </div>
 
