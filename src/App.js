@@ -24,7 +24,7 @@ const [drum, setDrum] = React.useState('');
 //define callback handler
 const handleDisplay = (event) => {
   setDrum(event.target.value);
-  play(drums.find(x => x.id === event.target.value).sound);
+  (drums.find(x => x.id === event.target.value).sound);
 };
 
   return (
