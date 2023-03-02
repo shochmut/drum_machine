@@ -74,19 +74,28 @@ export default function App() {
 
 //note the props destructuring
 function DrumPad({ onDrumPlay }) {
+  const handleKeyPress = (e) => {
+    
+  }
   return (
     <div className="drum-pads">
       {drums.map(function (item) {
-        const [play] = useSound(item.sound);
         return (
           <div>
             <Button
               className="drum-pad"
+              id={item.id}
               variant="primary"
               value={item.id}
               onClick={onDrumPlay}
+              onKeyPress={(e) => handleKeyPress(e)}
             >
               {item.name}
+              <audio
+                src={item.sound}
+                className='clip'
+                id={item.name}
+              />
             </Button>{' '}
           </div>
         );
