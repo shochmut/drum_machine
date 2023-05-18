@@ -1,7 +1,6 @@
 import React from 'react';
 import {useEffect, useRef} from 'react';
 import './style.scss';
-import useSound from 'use-sound';
 import Button from 'react-bootstrap/Button';
 
 // Define drumset resource. Note this is defined outside of the component so that it does not run every time the component is rendered since this constant will never change in this use.
