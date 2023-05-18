@@ -1,5 +1,5 @@
 import React from 'react';
-import useState from 'react';
+import {useEffect, useRef} from 'react';
 import './style.scss';
 import useSound from 'use-sound';
 import Button from 'react-bootstrap/Button';
@@ -53,15 +53,45 @@ const drums = [
   },
 ];
 
+//setup the keypress handler hook
+const useEventListener = (eventName, handler, element = window) => {
+  const savedHandler = useRef();
+
+  useEffect(() => {
+    savedHandler.current = handler;
+  }, [handler]);
+
+  useEffect(() => {
+    const eventListener = (event) => savedHandler.current(event);
+    element.addEventListener(eventName, eventListener);
+    return () => {
+      element.removeEventListener(eventName, eventListener);
+    };
+  }, [eventName, element]);
+};
+
 export default function App() {
   //set state
   const [drum, setDrum] = React.useState('');
 
-  //define callback handler
+  //define display callback handler
   const handleDisplay = (event) => {
     setDrum(event.target.value);
     new Audio(drums.find((x) => x.id === event.target.value).sound).play();
   };
+
+  //define keypress callback handler
+  const handler = ({ key }) => {
+    let keyOptions = ['q','w','e','a','s','d','z','x','c'];
+    //condition to check if keypressed is one of drum keys
+    if (keyOptions.includes(key)) {
+      let drum = drums.find((x) => x.name === key.toUpperCase()).id;
+      setDrum(drum);
+      new Audio(drums.find((x) => x.id === drum).sound).play();
+    }
+  };
+
+  useEventListener("keydown", handler);
 
   return (
     <div id="drum-machine">
@@ -72,11 +102,8 @@ export default function App() {
   );
 }
 
-//note the props destructuring
+//note the props destructuring on the function 
 function DrumPad({ onDrumPlay }) {
-  const handleKeyPress = (e) => {
-    
-  }
   return (
     <div className="drum-pads">
       {drums.map(function (item) {
@@ -88,7 +115,6 @@ function DrumPad({ onDrumPlay }) {
               variant="primary"
               value={item.id}
               onClick={onDrumPlay}
-              onKeyPress={(e) => handleKeyPress(e)}
             >
               {item.name}
               <audio
