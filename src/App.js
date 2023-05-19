@@ -94,9 +94,11 @@ export default function App() {
 
   return (
     <div id="drum-machine">
-      <Display id="display" displayDrum={drum} />
-      {/* pass the callback handler to the drumpad component as prop */}
-      <DrumPad onDrumPlay={handleDisplay} />
+      <div>
+        <Display id="display" displayDrum={drum} />
+        {/* pass the callback handler to the drumpad component as prop */}
+        <DrumPad onDrumPlay={handleDisplay} />
+      </div>
     </div>
   );
 }
@@ -132,7 +134,7 @@ function DrumPad({ onDrumPlay }) {
 //note the props destructuring
 function Display({ displayDrum }) {
   return (
-    <div>
+    <div className='display'>
       <p>{displayDrum}</p>
     </div>
   );
