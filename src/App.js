@@ -71,7 +71,7 @@ const useEventListener = (eventName, handler, element = window) => {
 
 export default function App() {
   //set state
-  const [drum, setDrum] = React.useState('');
+  const [drum, setDrum] = React.useState('*Click or Keypress drums*');
 
   //define display callback handler
   const handleDisplay = (event) => {
