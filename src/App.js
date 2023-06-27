@@ -1,5 +1,5 @@
 import React from 'react';
-import {useEffect, useRef} from 'react';
+import { useEffect, useRef } from 'react';
 import './style.scss';
 import Button from 'react-bootstrap/Button';
 
@@ -81,7 +81,7 @@ export default function App() {
 
   //define keypress callback handler
   const handler = ({ key }) => {
-    let keyOptions = ['q','w','e','a','s','d','z','x','c'];
+    let keyOptions = ['q', 'w', 'e', 'a', 's', 'd', 'z', 'x', 'c'];
     //condition to check if keypressed is one of drum keys
     if (keyOptions.includes(key)) {
       let drum = drums.find((x) => x.name === key.toUpperCase()).id;
@@ -90,8 +90,8 @@ export default function App() {
     }
   };
 
-  useEventListener("keydown", handler);
-
+  useEventListener('keydown', handler);
+  
   return (
     <div id="drum-machine">
       <div>
@@ -103,7 +103,7 @@ export default function App() {
   );
 }
 
-//note the props destructuring on the function 
+//note the props destructuring on the function
 function DrumPad({ onDrumPlay }) {
   return (
     <div className="drum-pads">
@@ -118,11 +118,7 @@ function DrumPad({ onDrumPlay }) {
               onClick={onDrumPlay}
             >
               {item.name}
-              <audio
-                src={item.sound}
-                className='clip'
-                id={item.name}
-              />
+              <audio src={item.sound} className="clip" id={item.name} />
             </Button>{' '}
           </div>
         );
@@ -134,7 +130,7 @@ function DrumPad({ onDrumPlay }) {
 //note the props destructuring
 function Display({ displayDrum }) {
   return (
-    <div className='display'>
+    <div className="display">
       <p>{displayDrum}</p>
     </div>
   );
